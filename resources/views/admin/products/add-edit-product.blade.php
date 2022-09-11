@@ -40,6 +40,14 @@
                     </button>
                   </div>
                 @endif
+                @if (Session::has('exist_message'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <h4>{{ Session::get('product_code').Session::get('exist_message') }}</h4>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                @endif
               <div class="card-header">
                 <h3 class="card-title">{{ $title }}</h3>
 
@@ -91,7 +99,8 @@
                     </div>
                     <div class="form-group">
                         <label>Code</label>
-                        <input name="product_code" type="text" class="form-control"  value="{{ !empty($editProductData) ? $editProductData->product_code : old('product_code') }}">
+                        <input id="codeCheck" name="product_code" type="text" class="form-control"  value="{{ !empty($editProductData) ? $editProductData->product_code : old('product_code') }}">
+                        <div><span id="codeExistMessage" class="text-danger"></span></div>
                     </div>
                     <div class="form-group">
                         <label>Color</label>
@@ -299,5 +308,22 @@
         }
         });
     });
+        </script>
+        <script>
+            $('#codeCheck').keyup(function(){
+                var code = $(this).val();
+                $.ajax({
+                  type: 'post',
+                  url: "{{ route('product-code-exist-check') }}",
+                  data: {code:code},
+                  success: function(resp){
+                    if(resp == 'true'){
+                        $('#codeExistMessage').html('This Product code is already exists.!!');
+                    }else{
+                        $('#codeExistMessage').html('');
+                    }
+                  }
+                });
+            });
         </script>
     @endsection

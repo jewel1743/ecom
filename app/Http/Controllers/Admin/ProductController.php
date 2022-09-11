@@ -104,7 +104,10 @@ class ProductController extends Controller
 
         if($request->isMethod('post')){
             $this->addEditProductValidation($request);
-            Product::addProduct($request);
+            $prodctCodeExistsCheck= Product::addProduct($request);
+            if($prodctCodeExistsCheck){
+                return $prodctCodeExistsCheck;
+            }
             return redirect()->back()->with('message', 'Product Added Successfully');
         }
             //section with category and subcategory section a hasmany reltin ase
@@ -125,6 +128,15 @@ class ProductController extends Controller
             'fitArray' => $fitArray,
             'occasionArray' => $occasionArray,
         ]);
+    }
+
+    public function productCodeExistCheck(Request $request){
+        if($request->ajax()){
+            $codeExistCheck= Product::where('product_code', $request->code)->first();
+            if($codeExistCheck){
+                return 'true';
+            }
+        }
     }
 
     public function deleteProduct($id){

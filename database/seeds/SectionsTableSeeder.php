@@ -15,14 +15,17 @@ class SectionsTableSeeder extends Seeder
     {
         $sectionsRecords=[
             [
+                'id' => 1,
                 'name' => 'Men',
                 'status' => 1,
             ],
             [
+                'id' => 2,
                 'name' => 'Women',
                 'status' => 1,
             ],
             [
+                'id' => 3,
                 'name' => 'Kids',
                 'status' => 1,
             ],

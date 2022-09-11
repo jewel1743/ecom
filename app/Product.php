@@ -47,6 +47,9 @@ protected static $small_image_path,$medium_image_path,$large_image_path;
     public function attributes(){
         return $this->hasMany(ProductAttribute::class);
     }
+    public function subImages(){
+        return $this->hasMany(ProductImage::class);
+    }
 
     public static function getImageUrl($request){
         self::$image= $request->file('main_image');
@@ -78,6 +81,11 @@ protected static $small_image_path,$medium_image_path,$large_image_path;
     }
 
     public static function addProduct($request){
+        $productCodeExistsCheck= Product::where('product_code', $request->product_code)->first();
+        if($productCodeExistsCheck){
+            return redirect()->back()->with(['product_code' => $productCodeExistsCheck->product_code, 'exist_message' => ' This Product Code is already exists.!']);
+        }
+
         self::$product= new Product();
         self::saveBasicInfo(self::$product, $request, self::getImageUrl($request), self::getvideoUrl($request));
     }

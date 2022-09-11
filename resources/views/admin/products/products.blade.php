@@ -82,10 +82,11 @@
                        @endif
                        </td>
                        <td>
-                             <a title="add/edit attribute" href="{{ route('product-attribute', ['id' => $product->id]) }}" class="btn btn-info btn-sm"><i class="fas fa-plus"></i></a>
-                             <a title="view details" href="{{ route('admin-product-details', ['id' => $product->id]) }}" class="btn btn-info btn-sm"><i class="fa fa-book"></i></a>
-                             <a title="edit" href="{{ route('add-edit-product', ['id' => $product->id]) }}" class="btn btn-success btn-sm"><i class="fa fa-edit"></i></a>
-                             <a title="delete" class="confirmDelete btn btn-danger btn-sm" href="javascript:void(0);" record="product" recordId="{{ $product->id }}"><i class="fa fa-trash"></i></a>
+                             <a title="add/edit attribute" href="{{ route('product-attribute', ['id' => $product->id]) }}"><i class="fas fa-plus text-info"></i></a>
+                             <a title="add/edit images" href="{{ route('product-images', ['id' => $product->id]) }}"><i class="fas fa-plus-circle text-primary"></i></a>
+                             <a title="view details" href="{{ route('admin-product-details', ['id' => $product->id]) }}"><i class="fa fa-book text-warning"></i></a>
+                             <a title="edit" href="{{ route('add-edit-product', ['id' => $product->id]) }}"><i class="fa fa-edit text-success"></i></a>
+                             <a title="delete" class="confirmDelete" href="javascript:void(0);" record="product" recordId="{{ $product->id }}"><i class="fa fa-trash text-danger"></i></a>
                        </td>
                      </tr>
                    @endforeach

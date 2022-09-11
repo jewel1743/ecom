@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\admin\ProductAttributeController;
+use App\Http\Controllers\Admin\ProductImagesController;
 
 
 /*
@@ -41,13 +42,14 @@ Route::prefix('/admin')->group(function(){
         Route::post('/update-password', [AdminController::class, 'updatePassword'])->name('admin-update-password');
         Route::match(['get','post'], '/update-details', [AdminController::class, 'adminUpdateDetails'])->name('admin-update-details');
 
-        //sections controler
+            //sections controler
         Route::get('/sections', [SectionController::class, 'index'])->name('section');
         Route::post('/update-section-status',[SectionController::class, 'updateSectionStatus'])->name('update-section-status');
 
-        //category controller
+            //category controller
         Route::get('/categories', [CategoryController::class, 'index'])->name('category');
         Route::post('/update-category-status',[CategoryController::class, 'updateCategoryStatus'])->name('update-category-status');
+
             //category add and edit both funtion are in this one category
         Route::match(['get','post'], '/add-edit-category/{id?}', [CategoryController::class, 'addEditCategory'])->name('add-edit-category');
         Route::post('/append-category-level', [CategoryController::class, 'appendCategoryLevel'])->name('append-category-level');
@@ -62,12 +64,17 @@ Route::prefix('/admin')->group(function(){
         Route::get('/play-product-video/{name}/{id}', [ProductController::class, 'playProductVideo'])->name('play-product-video');
         Route::get('/delete-product-video/{id}', [ProductController::class, 'deleteProductVideo'])->name('delete-product-video');
         Route::get('/product-details/{id}',[ProductController::class, 'adminProductDetails'])->name('admin-product-details');
+        Route::post('/product-code-exist',[ProductController::class, 'productCodeExistCheck'])->name('product-code-exist-check');
 
+            //prouduct multiple sub images
+        Route::match(['get','post'], '/product-images/{id}', [ProductImagesController::class, 'productImages'])->name('product-images');
+        Route::post('/update-image-status',[ProductImagesController::class, 'updateImageStatus'])->name('update-image-status');
+        Route::get('/delete-product-sub-image/{id}',[ProductImagesController::class, 'deleteSubImage'])->name('delete-sub-image');
             //product attributes
-            Route::match(['get','post'], '/add-edit-product-attribute/{id}', [ProductAttributeController::class, 'productAttribute'])->name('product-attribute');
-            Route::post('/update-attribute', [ProductAttributeController::class, 'updateAttribute'])->name('update-attribute');
-            Route::post('/update-attribute-status', [ProductAttributeController::class, 'updateAttributeStatus'])->name('update-attribute-status');
-            Route::get('/delete-product-attribute/{id}', [ProductAttributeController::class, 'deleteProductAttribute'])->name('delete-product-attribute');
+        Route::match(['get','post'], '/product-attribute/{id}', [ProductAttributeController::class, 'productAttribute'])->name('product-attribute');
+        Route::post('/update-attribute', [ProductAttributeController::class, 'updateAttribute'])->name('update-attribute');
+        Route::post('/update-attribute-status', [ProductAttributeController::class, 'updateAttributeStatus'])->name('update-attribute-status');
+        Route::get('/delete-product-attribute/{id}', [ProductAttributeController::class, 'deleteProductAttribute'])->name('delete-product-attribute');
     });
 
 });
