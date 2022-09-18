@@ -103,7 +103,7 @@ class AdminController extends Controller
         ];
 
         $customMsg=[
-            'name.required' => 'Name is Required',
+            'name.required' => 'Please Enter Valid Name',
             'name.regex' => 'Allow Only Cherecter And Space',
             'phone.required' => 'Phone is required',
             'phone.regex' => 'Please Enter Valid phone Number',

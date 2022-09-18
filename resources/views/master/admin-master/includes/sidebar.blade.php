@@ -66,7 +66,7 @@
             </ul>
           </li>
             <li class="nav-item menu-open">
-                <a href="#" class="nav-link {{ Session::get('active') == 'category' || Session::get('active') == 'section' ? 'active' : '' || Session::get('active') == 'product' ? 'active' : '' }}">
+                <a href="#" class="nav-link {{ Session::get('active') == 'category' || Session::get('active') == 'section' ? 'active' : '' || Session::get('active') == 'product' ? 'active' : '' || Session::get('active') == 'brand' ? 'active' : '' }}">
                     <i class="nav-icon fas fa-th"></i>
                     <p>
                       Catelouge
@@ -78,6 +78,12 @@
                 <a href="{{ route('section') }}" class="nav-link {{ Session::get('active') == 'section' ? 'active' : '' }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Sections</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('brand') }}" class="nav-link {{ Session::get('active') == 'brand' ? 'active' : '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Brands</p>
                 </a>
               </li>
               <li class="nav-item">

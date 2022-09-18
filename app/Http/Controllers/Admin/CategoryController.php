@@ -29,9 +29,10 @@ class CategoryController extends Controller
     public function updateCategoryStatus(Request $request){
         Session::flash('active', 'section');
         if($request->ajax()){
-            $this->categoryId= $request->category_id;
-            $this->status= $request->status;
-            if($this->status == 'Active'){
+            $this->category= Category::find($request->category_id);
+            $this->categoryId= $this->category->id;
+            $this->status= $this->category->status;
+            if($this->status == 1){
                 $this->status= 0;
             }else{
                 $this->status= 1;
@@ -47,7 +48,7 @@ class CategoryController extends Controller
         $rules=[
             'section_id' => 'required',
             'parent_id' => 'required',
-            'category_name' => 'required|regex:/^[\pL\s]+$/u|min:3',
+            'category_name' => 'required',
             'category_image' => 'mimes:jpg,png',
         ];
 

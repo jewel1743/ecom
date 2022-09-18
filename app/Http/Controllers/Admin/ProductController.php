@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Brand;
 use App\Category;
 use App\Http\Controllers\Controller;
 use App\Product;
+use App\ProductAttribute;
+use App\ProductImage;
 use App\Section;
 use Illuminate\Http\Request;
 use Session;
@@ -51,12 +54,27 @@ class ProductController extends Controller
             return response()->json(['status' => $this->status, 'productId' => $this->data['productId']]);
         }
     }
+    public function updateFeatureProductStatus(Request $request){
+        Session::flash('active', 'product');
+
+        if($request->ajax()){
+            $this->product= Product::find($request->productId);
+            if($this->product->is_featured == 'Yes'){
+                $this->status= 'No';
+            }else{
+                $this->status= 'Yes';
+            }
+            Product::where('id', $this->product->id)->update(['is_featured' => $this->status]);
+            return response()->json(['status' => $this->status]);
+        }
+    }
 
     public function addEditProductValidation($request, $id=null){
         //id null mane product add validation kaj krbe r id asa mane edit prodct kaj krbe
         if($id== ""){
             $rules=[
                 'category_id' => 'required',
+                'brand_id' => 'required',
                 'product_name' => 'required',
                 'product_code' => 'required',
                 'product_color' => 'required',
@@ -67,6 +85,7 @@ class ProductController extends Controller
         }else{
             $rules=[
                 'category_id' => 'required',
+                'brand_id' => 'required',
                 'product_name' => 'required',
                 'product_code' => 'required',
                 'product_color' => 'required',
@@ -79,6 +98,7 @@ class ProductController extends Controller
 
         $customMessage=[
             'category_id.required' => 'Please Select Category',
+            'brand_id.required' => 'Please Select Brand',
             'product_video.mimes' => 'Please upload mp4'
         ];
 
@@ -112,6 +132,7 @@ class ProductController extends Controller
         }
             //section with category and subcategory section a hasmany reltin ase
         $categories= Section::where('status', 1)->get();
+        $brands= Brand::where('status', 1)->get();
         //some manual array define here
         $fabricArray=['Printed', 'Polyester', 'AllOver Print', 'Cotton'];
         $patternArray=['Short Pattern', 'Long Pattern'];
@@ -121,6 +142,7 @@ class ProductController extends Controller
         return view('admin.products.add-edit-product',[
             'title' => $this->title,
             'categories' => $categories,
+            'brands' => $brands,
             'editProductData' => $this->editProductData,
             'fabricArray' => $fabricArray,
             'patternArray' => $patternArray,
@@ -141,6 +163,22 @@ class ProductController extends Controller
 
     public function deleteProduct($id){
         $product= Product::find($id);
+        $subImage= ProductImage::where('product_id',$id)->get();
+        $productAttribute= ProductAttribute::where('product_id', $id)->get();
+        foreach($subImage as $image){
+                //delete from folder
+            if(file_exists('images/product-image/sub-images/'.$image->images)){
+                unlink('images/product-image/sub-images/'.$image->images);
+            }
+                //delete from db
+            $image->delete();
+        }
+
+        foreach($productAttribute as $attribute){
+            $attribute->delete();
+        }
+
+
         if(file_exists('images/product-image/large/'.$product->main_image)){
             unlink('images/product-image/large/'.$product->main_image);
             unlink('images/product-image/medium/'.$product->main_image);

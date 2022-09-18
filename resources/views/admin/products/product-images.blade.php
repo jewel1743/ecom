@@ -102,7 +102,7 @@
                   </div>
                     <div>
                         <label for="images">Add Images</label>
-                        <input id="images"  type="file" name="images[]" class="form-control-file" required multiple accept="image/*" />
+                        <input id="images"  type="file" name="images[]" class="form-control-file" multiple  />
                         <div class="text-danger">
                             {{ Session::get('error_message') }}
                         </div>
@@ -120,8 +120,7 @@
           </div>
           <!-- /.container-fluid -->
         </section>
-        <form action="{{ route('update-attribute') }}" method="POST">
-          @csrf
+
           <div class="col-md-10 mx-auto">
             <div class="card my-5">
                @if (!count($subImage) == 0)  <!-- array te 1 er besi data asle !empty kaj korbe na karon tokon arry te 0 thake r 0 mane seta null o noy abr empty o noy tai  array empty condition count function diye krlm -->
@@ -163,10 +162,8 @@
                     <h4 class="text-center py-3">Sub image Empty,, This Product doesn't have any sub image.!!</h4>
                 @endif
             </div>
-
          </div>
         </div>
-      </form>
     @endsection
 
     @section('admin-js')

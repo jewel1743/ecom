@@ -6,6 +6,8 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\admin\ProductAttributeController;
 use App\Http\Controllers\Admin\ProductImagesController;
+use App\Http\Controllers\Admin\BrandController;
+use App\Http\Controllers\Front\IndexController;
 
 
 /*
@@ -27,6 +29,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+    //admin all routes start here
 Route::prefix('/admin')->group(function(){
 
     //admin controller
@@ -46,6 +49,11 @@ Route::prefix('/admin')->group(function(){
         Route::get('/sections', [SectionController::class, 'index'])->name('section');
         Route::post('/update-section-status',[SectionController::class, 'updateSectionStatus'])->name('update-section-status');
 
+         //brands controler
+         Route::match(['get','post'],'/add-edit-brands/{id?}',[BrandController::class,'addEditBrand'])->name('add-edit-brand');
+         Route::get('/brands', [BrandController::class, 'index'])->name('brand');
+         Route::post('/update-brand-status',[BrandController::class, 'updateBrandStatus'])->name('update-brand-status');
+         Route::get('/delete-brand/{id}',[BrandController::class, 'deleteBrand'])->name('delete-brand');
             //category controller
         Route::get('/categories', [CategoryController::class, 'index'])->name('category');
         Route::post('/update-category-status',[CategoryController::class, 'updateCategoryStatus'])->name('update-category-status');
@@ -65,6 +73,7 @@ Route::prefix('/admin')->group(function(){
         Route::get('/delete-product-video/{id}', [ProductController::class, 'deleteProductVideo'])->name('delete-product-video');
         Route::get('/product-details/{id}',[ProductController::class, 'adminProductDetails'])->name('admin-product-details');
         Route::post('/product-code-exist',[ProductController::class, 'productCodeExistCheck'])->name('product-code-exist-check');
+        Route::post('/update-feature-product-status', [ProductController::class, 'updateFeatureProductStatus'])->name('update-feature-product-status');
 
             //prouduct multiple sub images
         Route::match(['get','post'], '/product-images/{id}', [ProductImagesController::class, 'productImages'])->name('product-images');
@@ -76,5 +85,16 @@ Route::prefix('/admin')->group(function(){
         Route::post('/update-attribute-status', [ProductAttributeController::class, 'updateAttributeStatus'])->name('update-attribute-status');
         Route::get('/delete-product-attribute/{id}', [ProductAttributeController::class, 'deleteProductAttribute'])->name('delete-product-attribute');
     });
+
+
+
+
+});
+
+    //front all routes start here
+Route::prefix('/front')->group(function(){
+
+        //index controller
+     Route::get('/home', [IndexController::class, 'index'])->name('front-home');
 
 });

@@ -41,7 +41,7 @@
             @endif
             <div class="card-header">
               <h3 class="card-title">All Categories</h3>
-              <a href="{{ route('add-edit-category') }}" style="max-width: 120px; float:right; display:inline-block;" class="btn btn-success align-end">Add Category</a>
+              <a href="{{ route('add-edit-category') }}" style="max-width: 150px; float:right; display:inline-block;" class="btn btn-success">Add Category</a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -67,9 +67,9 @@
                         <td>{{ $category->url }}</td>
                         <td>
                             @if ($category->status == 1)
-                            <a class="categoryUpdateStatus" href="javascript:void(0);" id="category-{{ $category->id }}" category_id="{{ $category->id }}">Active</a>
+                            <a class="categoryUpdateStatus" href="javascript:void(0);" id="category-{{ $category->id }}" category_id="{{ $category->id }}"><i class="fa fa-toggle-on"></i></a>
                             @else
-                            <a class="categoryUpdateStatus text-danger" href="javascript:void(0);" id="category-{{ $category->id }}" category_id="{{ $category->id }}">Inactive</a>
+                            <a class="categoryUpdateStatus text-danger" href="javascript:void(0);" id="category-{{ $category->id }}" category_id="{{ $category->id }}"><i class="fa fa-toggle-off"></i></a>
                         @endif
                         </td>
                         <td>
@@ -117,18 +117,17 @@
     });
   </script>
   <script>
-    $('.categoryUpdateStatus').click(function(){
-        var status= $(this).text();
+        $(document).on("click", ".categoryUpdateStatus", function(){
         var category_id= $(this).attr("category_id");
         $.ajax({
             type: 'post',
             url: "{{ route('update-category-status')}}",
-            data: {status:status, category_id:category_id},
+            data: {category_id:category_id},
             success: function(resp){
                 if(resp.status == 1){
-                    $('#category-'+category_id).html('<a class="categoryUpdateStatus" href="javascript:void(0);">Active</a>');
+                    $('#category-'+category_id).html('<a class="categoryUpdateStatus" href="javascript:void(0);"><i class="fa fa-toggle-on"></i></a>');
                 }else{
-                    $('#category-'+category_id).html('<a class="categoryUpdateStatus text-danger" href="javascript:void(0);">Inactive</a>');
+                    $('#category-'+category_id).html('<a class="categoryUpdateStatus" href="javascript:void(0);"><i class="fa fa-toggle-off"></i></a>');
                 }
             },
             error: function(error){
@@ -137,7 +136,7 @@
         });
     });
 
-    $(".confirmDelete").click(function(){
+    $(document).on("click", ".confirmDelete", function(){
         var record= $(this).attr("record");
         var recordId= $(this).attr("recordId");
         Swal.fire({

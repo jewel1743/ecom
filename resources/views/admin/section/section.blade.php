@@ -1,7 +1,7 @@
 @extends('master.admin-master.master')
 
 @section('title')
-    Catelouge
+    Sections
 @endsection
 @section('admin-css')
 <link rel="stylesheet" href="{{ asset('/') }}admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
@@ -15,12 +15,12 @@
             <div class="container-fluid">
               <div class="row mb-2">
                 <div class="col-sm-6">
-                  <h1 class="m-0">Catelouge</h1>
+                  <h1 class="m-0">Sections</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                   <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="{{ route('admin-dashboard') }}">Home</a></li>
-                    <li class="breadcrumb-item active">Catelouge</li>
+                    <li class="breadcrumb-item active">Sections</li>
                   </ol>
                 </div><!-- /.col -->
               </div><!-- /.row -->
@@ -85,21 +85,17 @@
     <script src="{{ asset('/') }}admin/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
     <script src="{{ asset('/') }}admin/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
     <script src="{{ asset('/') }}admin/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
-    <script src="{{ asset('/') }}admin/plugins/jszip/jszip.min.js"></script>
-    <script src="{{ asset('/') }}admin/plugins/pdfmake/pdfmake.min.js"></script>
-    <script src="{{ asset('/') }}admin/plugins/pdfmake/vfs_fonts.js"></script>
     <script src="{{ asset('/') }}admin/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
-    <script src="{{ asset('/') }}admin/plugins/datatables-buttons/js/buttons.print.min.js"></script>
-    <script src="{{ asset('/') }}admin/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
     <!-- Page specific script -->
-<script>
-    $(function () {
-      $("#sections").DataTable({
-        "responsive": true, "lengthChange": false, "autoWidth": false,
-        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-      }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-    });
-  </script>
+    <script>
+        $(function () {
+        $("#sections").DataTable({
+            "responsive": true, "lengthChange": false, "autoWidth": false,
+            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        });
+    </script>
+
   <script>
     $('.sectionUpdateStatus').click(function(){
         var status= $(this).text();

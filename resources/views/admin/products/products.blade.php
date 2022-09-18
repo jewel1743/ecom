@@ -52,8 +52,10 @@
                  <th>SL</th>
                  <th>Product Name</th>
                  <th>Product Price</th>
+                 <th>Brand</th>
                  <th>Product Category</th>
                  <th>Section</th>
+                 <th>Featured</th>
                  <th>Image</th>
                  <th>Status</th>
                  <th>Action</th>
@@ -65,8 +67,14 @@
                        <td>{{ $loop->iteration }}</td>
                        <td>{{ $product->product_name }}</td>
                        <td>{{ $product->product_price }}</td>
+                       <td>{{ !empty($product->brand) ? $product->brand->brand_name : 'Others'  }}</td>
                        <td>{{ $product->category->category_name }}</td>
                        <td>{{ $product->section->name }}</td>
+                       <td>@if ($product->is_featured == 'Yes')
+                        <a class="featureProductStatus" href="javascript:void(0);" id="featureProduct-{{ $product->id }}" product_id="{{ $product->id }}"><i class="fa fa-toggle-on"></i></a>
+                        @else
+                        <a class="featureProductStatus" href="javascript:void(0);" id="featureProduct-{{ $product->id }}" product_id="{{ $product->id }}"><i class="fa fa-toggle-off"></i></a>
+                       @endif</td>
                        <td>
                             @if (!empty($product->main_image))
                                  <img src="{{ asset('images/product-image/small/'.$product->main_image) }}" alt="" height="120" width="120">
@@ -134,6 +142,26 @@
                     $('#product-'+productId).html('<a class="productUpdateStatus" href="javascript:void(0);">Active</a>');
                 }else{
                     $('#product-'+productId).html('<a class="productUpdateStatus text-danger" href="javascript:void(0);">Inactive</a>');
+                }
+            },
+            error: function(error){
+
+            }
+        });
+    });
+  </script>
+<script>
+    $('.featureProductStatus').click(function(){
+        var productId= $(this).attr("product_id");
+        $.ajax({
+            type: 'post',
+            url: "{{ route('update-feature-product-status')}}",
+            data: {productId:productId},
+            success: function(resp){
+                if(resp.status == 'Yes'){
+                    $('#featureProduct-'+productId).html('<a class="featureProductStatus" href="javascript:void(0);"><i class="fa fa-toggle-on"></i></a>');
+                }else{
+                    $('#featureProduct-'+productId).html('<a class="featureProductStatus" href="javascript:void(0);"><i class="fa fa-toggle-off"></i></a>');
                 }
             },
             error: function(error){

@@ -94,6 +94,15 @@
                       </select>
                     </div>
                     <div class="form-group">
+                      <label>Select Brand</label>
+                      <select name="brand_id" class="form-control select2bs4" style="width: 100%;">
+                        <option selected disabled>---Select a Brand---</option>
+                        @foreach ($brands as $brand)
+                            <option value="{{ $brand->id }}" {{ !empty($editProductData) && $editProductData->brand_id == $brand->id ? 'selected' : ''  }}>{{ $brand->brand_name }}
+                        @endforeach
+                      </select>
+                    </div>
+                    <div class="form-group">
                         <label>Product Name</label>
                         <input name="product_name" type="text" class="form-control" value="{{ !empty($editProductData) ? $editProductData->product_name : old('product_name') }}">
                     </div>
@@ -138,7 +147,7 @@
                         <label>Main Image</label>
                         <div class="input-group">
                           <div class="custom-file">
-                            <input type="file" name="main_image" class="custom-file-input" id="exampleInputFile" accept="image/*">
+                            <input type="file" name="main_image" class="custom-file-input" id="exampleInputFile" >
                             <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                           </div>
                         </div>

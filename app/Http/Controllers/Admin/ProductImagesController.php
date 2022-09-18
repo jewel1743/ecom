@@ -15,8 +15,16 @@ class ProductImagesController extends Controller
         $subImage= ProductImage::where('product_id', $id)->get();
         if($request->isMethod('post')){
 
+                //avabe o array image validation kora jay,, cstm msg er jnno images.*.mimes => 'msg ta' avabe
+            //  $this->validate($request, [
+            //     'images' => 'required|array',
+            //     'images.*' => 'mimes:png,jpg',
+            //  ]);
+
+            //ProductImage model thke error er jnno return kora hyce tai seta dhora hyce akhane
           $error= ProductImage::saveImages($request, $id);
 
+          //jodi model theke error ase thle sei error return krle view te r na asle else er ta return krbe
           if($error){
             return $error;
           }else{

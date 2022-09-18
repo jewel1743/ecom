@@ -30,6 +30,10 @@
                             <td>{{ $product->product_price }}</td>
                         </tr>
                         <tr>
+                            <th>Brand</th>
+                            <td>{{ !empty($product->brand) ? $product->brand->brand_name : 'Others'  }}</td>
+                        </tr>
+                        <tr>
                             <th>Discount</th>
                             <td>{{ $product->product_discount }}</td>
                         </tr>

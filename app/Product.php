@@ -40,6 +40,10 @@ protected static $small_image_path,$medium_image_path,$large_image_path;
        return $this->belongsTo(Section::class); //product table foreng key section_id ase tai auto kaj krbe parameter bolte hobe (Section::class,'section_id'); avabe blte hbe na
     }
 
+    public function brand(){
+        return $this->belongsTo(Brand::class);
+    }
+
     public function category(){
        return $this->belongsTo(Category::class);
     }
@@ -131,6 +135,7 @@ protected static $small_image_path,$medium_image_path,$large_image_path;
         //add product form theke sudu category id asbe tai sei category er section ta nilam
         $category= Category::where('id',$request->category_id)->first();
         $product->section_id = $category->section_id;
+        $product->brand_id= $request->brand_id;
         $product->category_id = $request->category_id;
         $product->product_name = $request->product_name;
         $product->product_code = $request->product_code;
