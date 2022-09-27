@@ -1,6 +1,6 @@
 @extends('master.admin-master.master')
 @section('title')
-    {{ $title }}
+    Add Banner
 @endsection
 
 @section('body')
@@ -45,23 +45,41 @@
                   </div>
                 @endif
                 <div class="card ">
-                <form action="{{ !empty($brandData) ? route('add-edit-brand', ['id' => $brandData->id]) : route('add-edit-brand') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ !empty($bannerData) ? route('add-edit-banner', ['id' => $bannerData->id]) : route('add-edit-banner') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="card-header">
                         <h4>{{ $title }}</h4>
                     </div>
                     <div class="card-body">
-                            <div class="form-group">
-                                <label for="">Brand Name</label>
-                                <input type="text" value="{{ !empty($brandData) ? $brandData->brand_name : old('brand_name') }}" name="brand_name" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="">Brand Image</label>
-                                <input type="file" name="brand_image" class="form-control-file">
-                            </div>
+                        <div class="form-group">
+                            <label for="">Banner Image</label>
+                            <input type="file" name="image" class="form-control-file">
+                            @if (!empty($bannerData->image))
+                                <img src="{{ asset($bannerData->image) }}" alt="" height="120" width="120">
+                                <div>
+                                    <a target="_blank" href="{{ asset($bannerData->image) }}">View Image</a>
+                                </div>
+                            @endif
+                        </div>
+                        <div class="form-group">
+                            <label for="">Title</label>
+                            <input type="text" name="title" value="{{ !empty($bannerData) ? $bannerData->title : old('title') }}" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="">link</label>
+                            <input type="text" name="link" value="{{ !empty($bannerData) ? $bannerData->link : old('link') }}" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Alt</label>
+                            <input type="text" name="alt" value="{{ !empty($bannerData) ? $bannerData->alt : old('alt') }}" class="form-control">
+                        </div>
                     </div>
                     <div class="card-footer">
-                        <button class="btn btn-success" type="submit">Save Brand</button>
+                        @if (!empty($bannerData))
+                        <button class="btn btn-success" type="submit">Update Banner</button>
+                        @else
+                        <button class="btn btn-success" type="submit">Save Banner</button>
+                        @endif
                     </div>
                 </form>
                 </div>

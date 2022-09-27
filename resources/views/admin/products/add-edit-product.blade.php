@@ -177,7 +177,7 @@
                         <select name="fabric" class="form-control" style="width: 100%;">
                           <option style="" selected disabled>---Select a Fabric---</option>
                           @foreach ($fabricArray as $fabric)
-                            <option value="{{ $fabric }}" {{ !empty($editProductData) && $editProductData->fabric == $fabric ? 'selected' : '' }} {{ old('fabric') == $fabric ? 'selected' : '' }}>{{ $fabric }}</option>
+                            <option value="{{ $fabric->name }}" {{ !empty($editProductData) && $editProductData->fabric == $fabric->name ? 'selected' : '' }} {{ old('fabric') == $fabric->name ? 'selected' : '' }}>{{ $fabric->name }}</option>
                           @endforeach
                         </select>
                       </div>
@@ -186,7 +186,7 @@
                         <select name="pattern" class="form-control" style="width: 100%;">
                           <option style="" selected disabled>---Select a Pattern---</option>
                           @foreach ($patternArray as $pattern)
-                            <option value="{{ $pattern }}" {{ !empty($editProductData) && $editProductData->pattern == $pattern ? 'selected' : '' }} {{ old('pattern') == $pattern ? 'selected' : '' }}>{{ $pattern }}</option>
+                            <option value="{{ $pattern->name }}" {{ !empty($editProductData) && $editProductData->pattern == $pattern->name ? 'selected' : '' }} {{ old('pattern') == $pattern->name ? 'selected' : '' }}>{{ $pattern->name }}</option>
                           @endforeach
                         </select>
                       </div>
@@ -195,7 +195,7 @@
                         <select name="sleeve" class="form-control" style="width: 100%;">
                           <option style="" selected disabled>---Select a Sleeve---</option>
                           @foreach ($sleeveArray as $sleeve)
-                            <option value="{{ $sleeve }}" {{ !empty($editProductData) && $editProductData->sleeve == $sleeve ? 'selected' : '' }} {{ old('sleeve') == $sleeve ? 'selected' : '' }}>{{ $sleeve }}</option>
+                            <option value="{{ $sleeve->name }}" {{ !empty($editProductData) && $editProductData->sleeve == $sleeve->name ? 'selected' : '' }} {{ old('sleeve') == $sleeve->name ? 'selected' : '' }}>{{ $sleeve->name }}</option>
                           @endforeach
                         </select>
                       </div>
@@ -204,7 +204,7 @@
                         <select name="fit" class="form-control" style="width: 100%;">
                           <option style="" selected disabled>---Select a Fit---</option>
                           @foreach ($fitArray as $fit)
-                          <option value="{{ $fit }}" {{ !empty($editProductData) && $editProductData->fit == $fit ? 'selected' : '' }} {{ old('fit') == $fit ? 'selected' : '' }}>{{ $fit }}</option>
+                          <option value="{{ $fit->name }}" {{ !empty($editProductData) && $editProductData->fit == $fit->name ? 'selected' : '' }} {{ old('fit') == $fit->name ? 'selected' : '' }}>{{ $fit->name }}</option>
                         @endforeach
                         </select>
                       </div>
@@ -213,7 +213,7 @@
                         <select name="occasion" class="form-control" style="width: 100%;">
                           <option style="" selected disabled>---Select a Occasion---</option>
                           @foreach ($occasionArray as $occasion)
-                          <option value="{{ $occasion }}" {{ !empty($editProductData) && $editProductData->occasion == $occasion ? 'selected' : '' }} {{ old('occasion') == $occasion ? 'selected' : '' }}>{{ $occasion }}</option>
+                          <option value="{{ $occasion->name }}" {{ !empty($editProductData) && $editProductData->occasion == $occasion->name ? 'selected' : '' }} {{ old('occasion') == $occasion->name ? 'selected' : '' }}>{{ $occasion->name }}</option>
                         @endforeach
                         </select>
                       </div>

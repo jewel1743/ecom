@@ -65,8 +65,9 @@
               </li>
             </ul>
           </li>
+                <!-- Start Catelouge Group  -->
             <li class="nav-item menu-open">
-                <a href="#" class="nav-link {{ Session::get('active') == 'category' || Session::get('active') == 'section' ? 'active' : '' || Session::get('active') == 'product' ? 'active' : '' || Session::get('active') == 'brand' ? 'active' : '' }}">
+                <a href="#" class="nav-link {{ Session::get('active') == 'category' || Session::get('active') == 'section' ? 'active' : '' || Session::get('active') == 'product' ? 'active' : '' || Session::get('active') == 'brand' ? 'active' : '' || Session::get('active') == 'banner' ? 'active' : '' }}">
                     <i class="nav-icon fas fa-th"></i>
                     <p>
                       Catelouge
@@ -98,8 +99,57 @@
                   <p>Products</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="{{ route('banners') }}" class="nav-link {{ Session::get('active') == 'banner' ? 'active' : '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Banners</p>
+                </a>
+              </li>
             </ul>
+          </li><!-- End Catelouge Group  -->
+
+            <!-- Start Product Filter -->
+          <li class="nav-item menu-open">
+            <a href="#" class="nav-link {{ Session::get('active') == 'fabric' || Session::get('active') == 'pattern' ? 'active' : '' || Session::get('active') == 'sleeve' ? 'active' : '' || Session::get('active') == 'fit' ? 'active' : '' || Session::get('active') == 'occasion' ? 'active' : '' }}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                    Product Filters
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+        <ul class="nav nav-treeview">
+          <li class="nav-item">
+            <a href="{{ route('fabric') }}" class="nav-link {{ Session::get('active') == 'fabric' ? 'active' : '' }}">
+              <i class="far fa-circle nav-icon"></i>
+              <p>Fabrics</p>
+            </a>
           </li>
+          <li class="nav-item">
+            <a href="{{ route('pattern') }}" class="nav-link {{ Session::get('active') == 'pattern' ? 'active' : '' }}">
+              <i class="far fa-circle nav-icon"></i>
+              <p>Patterns</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('sleeve') }}" class="nav-link {{ Session::get('active') == 'sleeve' ? 'active' : '' }}">
+              <i class="far fa-circle nav-icon"></i>
+              <p>Sleeves</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('fit') }}" class="nav-link {{ Session::get('active') == 'fit' ? 'active' : '' }}">
+              <i class="far fa-circle nav-icon"></i>
+              <p>Fits</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('occasion') }}" class="nav-link {{ Session::get('active') == 'occasion' ? 'active' : '' }}">
+              <i class="far fa-circle nav-icon"></i>
+              <p>Occasions</p>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Product Filter -->
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

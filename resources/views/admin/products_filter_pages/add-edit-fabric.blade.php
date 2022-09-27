@@ -45,23 +45,19 @@
                   </div>
                 @endif
                 <div class="card ">
-                <form action="{{ !empty($brandData) ? route('add-edit-brand', ['id' => $brandData->id]) : route('add-edit-brand') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ !empty($fabricData) ? route('add-edit-fabric', ['id' => $fabricData->id]) : route('add-edit-fabric') }}" method="POST">
                     @csrf
                     <div class="card-header">
                         <h4>{{ $title }}</h4>
                     </div>
                     <div class="card-body">
                             <div class="form-group">
-                                <label for="">Brand Name</label>
-                                <input type="text" value="{{ !empty($brandData) ? $brandData->brand_name : old('brand_name') }}" name="brand_name" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="">Brand Image</label>
-                                <input type="file" name="brand_image" class="form-control-file">
+                                <label for="">Fabric Name</label>
+                                <input type="text" value="{{ !empty($fabricData) ? $fabricData->name : old('fabric_name') }}" name="name" class="form-control">
                             </div>
                     </div>
                     <div class="card-footer">
-                        <button class="btn btn-success" type="submit">Save Brand</button>
+                        <button class="btn btn-success" type="submit">Save Fabric</button>
                     </div>
                 </form>
                 </div>

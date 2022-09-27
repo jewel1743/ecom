@@ -74,7 +74,11 @@
                         </td>
                         <td>
                               <a href="{{ route('add-edit-category', ['id' => $category->id]) }}" class="btn btn-success btn-sm"><i class="fa fa-edit"></i></a>
-                              <a href="javascript:void(0)" record="category" recordId="{{ $category->id }}" class="btn btn-danger btn-sm confirmDelete"><i class="fa fa-trash"></i></a>
+                              @if ($category->parent_id == 0)
+                                <a href="javascript:void(0)" record="category" recordId="{{ $category->id }}" class="btn btn-danger btn-sm {{ $category->parent_id == 0 ? 'disabled' : 'confirmDelete' }}"><i class="fa fa-trash"></i></a>
+                               @else
+                                <a href="javascript:void(0)" record="category" recordId="{{ $category->id }}" class="btn btn-danger btn-sm confirmDelete"><i class="fa fa-trash"></i></a>
+                              @endif
                         </td>
                       </tr>
                     @endforeach

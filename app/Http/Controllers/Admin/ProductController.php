@@ -4,11 +4,16 @@ namespace App\Http\Controllers\Admin;
 
 use App\Brand;
 use App\Category;
+use App\Fabric;
+use App\Fit;
 use App\Http\Controllers\Controller;
+use App\Occasion;
+use App\Pattern;
 use App\Product;
 use App\ProductAttribute;
 use App\ProductImage;
 use App\Section;
+use App\Sleeve;
 use Illuminate\Http\Request;
 use Session;
 
@@ -133,12 +138,14 @@ class ProductController extends Controller
             //section with category and subcategory section a hasmany reltin ase
         $categories= Section::where('status', 1)->get();
         $brands= Brand::where('status', 1)->get();
-        //some manual array define here
-        $fabricArray=['Printed', 'Polyester', 'AllOver Print', 'Cotton'];
-        $patternArray=['Short Pattern', 'Long Pattern'];
-        $sleeveArray=['Full Sleeve', 'Half Sleeve', 'Sleeveless'];
-        $fitArray=['Regular Fit', 'Slim Fit'];
-        $occasionArray=['Formal', 'Casual'];
+
+        //Prduct filters
+        $fabricArray= Fabric::where('status', 1)->get();
+        $patternArray= Pattern::where('status', 1)->get();
+        $sleeveArray= Sleeve::where('status', 1)->get();
+        $fitArray= Fit::where('status', 1)->get();
+        $occasionArray= Occasion::where('status', 1)->get();
+
         return view('admin.products.add-edit-product',[
             'title' => $this->title,
             'categories' => $categories,
@@ -161,7 +168,8 @@ class ProductController extends Controller
         }
     }
 
-    public function deleteProduct($id){
+    //aii function ta static krlam karon ata category controller a use krbo tai kew jodi category delete kore tkn to sei category er product o delete krte hobe tai static krlam
+    public static function deleteProduct($id){
         $product= Product::find($id);
         $subImage= ProductImage::where('product_id',$id)->get();
         $productAttribute= ProductAttribute::where('product_id', $id)->get();

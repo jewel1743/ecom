@@ -21,16 +21,16 @@
 		        <a class="brand" href="#">Stack Developers</a>
 		        <div class="nav-collapse">
 		          <ul class="nav">
-		            <li class="active"><a href="#">Home</a></li>
+		            <li class="active"><a href="{{ route('front-home') }}">Home</a></li>
                     @foreach ($sections as $section)
 		            <li class="dropdown">
-		              <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ $section->name }} <b class="caret"></b></a>
+		              <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">{{ $section->name }} <b class="caret"></b></a>
                         @if (!count($section->categories) == 0)
                         <ul class="dropdown-menu">
                             @foreach ($section->categories as $category)
-                                <li class="nav-header"><a href="#">{{ $category->category_name }}</a></li>
+                                <li class="nav-header"><a href="{{ $category->url }}">{{ $category->category_name }}</a></li>
                                     @foreach ($category->subCategory as $subCategory)
-                                        <li><a href="#">{{ $subCategory->category_name }}</a></li>
+                                        <li><a href="{{ url('/'.$subCategory->url) }}">{{ $subCategory->category_name }}</a></li>
                                     @endforeach
                                     <li class="divider"></li>
                             @endforeach

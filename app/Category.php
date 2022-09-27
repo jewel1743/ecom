@@ -84,4 +84,34 @@ class Category extends Model
     public function parentCategory(){
         return $this->belongsTo(Category::class, 'parent_id'); //akhae ->select('id','name') avabe deya jabe jodi nirdisto kisu lage sob na niye..
     }
+
+    public static function categoryDetails($url){
+
+        //ata array method amr boss er method ata ecom series master er
+      $catDetails= Category::select('id','category_name','url')->with(['subCategory' => function($query){
+        $query->select('id','parent_id')->where('status',1); // subCategory sob info dorkar nai tai avabe nilam
+      }])->where(['url' => $url,'status' => 1])->first()->toArray(); //end chainging
+        $catIds= array(); //ata akta array kore nilam karon atate onek subcat id  store hote pare
+        //
+        $categoryIds[]= $catDetails['id']; //atae main category id ta asbe  abong ata 0 index a save hobe aii array er
+
+        //aii category er under a joto subcategory ase segular jnno for each
+      foreach($catDetails['sub_category'] as $category){ // ata jodi array  na hoye json abject hoto tahole relation name ta $catDetails['sub_category'] na hoye $catDetails->subCategory amn hoto,, ata jehuto array kore nici tai relation name ta sub_category amn hoyce sub er por Upprcse C subCategory amn ase tai majhe _ ata diye sub_category amn hyce
+        $categoryIds[]= $category['id']; //main category er under a joto subCat ase sobar sudu id aii array te save er jnno
+      }
+
+      
+      return array('categoryIds' => $categoryIds, 'catDetails' => $catDetails); // catids te main catid and main cat er under joto subCat ase tar id nilm r R catDetails a ja select krci sudu tai e nilam
+
+    //     //json array method amar moto kore ata laravel er
+    //     $category= Category::where(['url' => $url, 'status' => 1])->first();
+    //     $categoryIds= array();
+    //     $categoryIds[]= $category->id;
+    //     foreach($category->subCategory as $subCat){
+    //         $categoryIds[]= $subCat->id;
+    //     }
+
+    //     return array('categoryIds' => $categoryIds, 'category' => $category);
+
+    }
 }

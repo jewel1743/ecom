@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Front\BannerController;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -18,6 +19,12 @@ class DatabaseSeeder extends Seeder
         // $this->call(ProductsTableSeeder::class);
         // $this->call(ProuductsAttributeSeeder::class);
         // $this->call(ProuductImagesSeeder::class);
-         $this->call(BrandsTableSeeder::class);
+        // $this->call(BrandsTableSeeder::class);
+         //$this->call(BannersTableSeeder::class);
+        //  $this->call(FabricsTableSeeder::class);
+        //  $this->call(PatternsTableSeeder::class);
+        //  $this->call(SleeveTableSeeder::class);
+        //  $this->call(FitsTableSeeder::class);
+        //  $this->call(OccasionsTableSeeder::class);
     }
 }

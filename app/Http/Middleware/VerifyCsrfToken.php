@@ -21,6 +21,8 @@ class VerifyCsrfToken extends Middleware
     protected $except = [
         "/admin/check-current-password", "/admin/update-section-status","/admin/update-category-status",
         "/admin/append-category-level", "/admin/update-product-status", "/admin/update-attribute-status",
-        "/admin/product-code-exist", "/admin/update-image-status", "/admin/update-brand-status", "/admin/update-feature-product-status"
+        "/admin/product-code-exist", "/admin/update-image-status", "/admin/update-brand-status", "/admin/update-feature-product-status",
+        "/admin/update-banner-status", "/admin/update-fabric-status", "/admin/update-pattern-status", "/admin/update-sleeve-status",
+        "/admin/update-fit-status", "/admin/update-occasion-status",
     ];
 }

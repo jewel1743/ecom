@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Category;
 use App\Http\Controllers\Controller;
+use App\Product;
 use App\Section;
 use Illuminate\Http\Request;
 use Session;
+use App\Http\Controllers\Admin\ProductController;
 
 class CategoryController extends Controller
 {
@@ -21,7 +23,7 @@ class CategoryController extends Controller
 
         Session::flash('active','category');
             //category relation functio  avabe with kore niye geleo hobe na nileo hobe
-        $this->categories= Category::with(['section','parentCategory'])->where('status', 1)->get();
+        $this->categories= Category::with(['section','parentCategory'])->where('status', 1)->orderBy('id','DESC')->get();
         return view('admin.categories.category', ['categories' => $this->categories]);
 
     }
@@ -97,7 +99,7 @@ class CategoryController extends Controller
                 $this->addEditCategoryValidate($request);
                 //save from category model jst call here
             Category::saveCategory($request);
-            Session::flash('message', 'Category Create Successfully');
+            return redirect('/admin/categories')->with('message', 'Category Create Successfully');
         }
 
         $sections= Section::all();
@@ -115,8 +117,20 @@ class CategoryController extends Controller
 
     }
 
+        //delete 
     public function deleteCategory($id){
+
         $this->category= Category::find($id);
+        $catecoryProducts= Product::where('category_id', $id)->get();
+
+        foreach($catecoryProducts as $product){
+            ProductController::deleteProduct($product->id);
+        }
+
+        if(file_exists($this->category->category_image)){
+            unlink($this->category->category_image);
+        }
+
         $this->category->delete();
         return back()->with('message', 'Category Delete Successfully');
     }

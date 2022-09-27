@@ -6,9 +6,9 @@
             <ul>
             @if (count($section->categories) >0)
                 @foreach ($section->categories as $category)
-                    <li><a href="products.html"><i class="icon-chevron-right"></i><strong>{{ $category->category_name }}</strong></a></li>
+                    <li><a href="{{ $category->url }}"><i class="icon-chevron-right"></i><strong>{{ $category->category_name }}</strong></a></li>
                     @foreach ($category->subCategory as $subCategory)
-                        <li><a href="products.html"><i class="icon-chevron-right"></i>{{ $subCategory->category_name }}</a></li>
+                        <li><a href="{{ $subCategory->url }}"><i class="icon-chevron-right"></i>{{ $subCategory->category_name }}</a></li>
                     @endforeach
                 @endforeach
             @endif
