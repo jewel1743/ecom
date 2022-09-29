@@ -1,5 +1,6 @@
 <?php
 
+use App\Category;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\CategoryController;
@@ -135,6 +136,20 @@ Route::name('front-')->group(function(){
      Route::get('/', [IndexController::class, 'index'])->name('home');
 
      //Prouduct Controller
-    Route::get('/{url}',[FrontProductController::class, 'categoryProducts'])->name('category-products');
+
+    //Route::get('/{url}',[FrontProductController::class, 'categoryProducts'])->name('category-products'); //avabe kaj krle main doamin er por category cara valid url dileo error dibe jodi se name categoy na thake tai ata badh nicher technic a kaj krte hobe
+
+        //catUrls a category er sob url gula niye aslm abong seta akta array te raklm sudu url nichi
+    $catUrls= Category::select('url')->where('status',1)->get()->pluck('url')->toArray(); //pluck er por toArray use krleo hobe na krleo hobe karon pluck use krle seta array korei data rakbe tobe toArray use kora valo
+   // echo '<pre>'; print_r($catUrls); die; //pluck ta collection er moto avabe pluck user kore pluck er modde je value dibo aii table er sei sob gula value niye akta single array te joma kore rakbe
+        //joto gula category hobe tar url er under a aii route gula auto toiri hobe dynamic
+    foreach($catUrls as $url){
+        Route::get('/'.$url,[FrontProductController::class, 'categoryProducts']); //aii cntroller er aii function a current url dynamicly get kore neya ase getFacedRoot er maddhome check koro categoryProduct fntion
+    }
+
+    Route::get('/contract-us', function(){
+        echo 'Contract-us Page';
+    });
+
 
 });

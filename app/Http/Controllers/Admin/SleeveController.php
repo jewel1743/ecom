@@ -22,6 +22,7 @@ class SleeveController extends Controller
     }
 
     public function addEditSleeve(Request $request, $id=null){
+        Session::flash('active', 'sleeve');
         if($id == ""){
             $title = 'Add Sleeve';
         }else{
@@ -64,6 +65,7 @@ class SleeveController extends Controller
     }
 
     public function deleteSleeve($id){
+        Session::flash('active', 'sleeve');
         $sleeve= Sleeve::find($id);
         $sleeve->delete();
         return redirect()->back()->with('message', 'Sleeve Deleted Successfully');

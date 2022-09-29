@@ -22,6 +22,7 @@ class OccasionController extends Controller
     }
 
     public function addEditoccasion(Request $request, $id=null){
+        Session::flash('active', 'occasion');
         if($id == ""){
             $title = 'Add Occasion';
         }else{
@@ -64,6 +65,7 @@ class OccasionController extends Controller
     }
 
     public function deleteOccasion($id){
+        Session::flash('active', 'occasion');
         $occasion= Occasion::find($id);
         $occasion->delete();
         return redirect()->back()->with('message', 'Occasion Deleted Successfully');

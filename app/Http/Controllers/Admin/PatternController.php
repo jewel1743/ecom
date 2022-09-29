@@ -22,6 +22,7 @@ class PatternController extends Controller
     }
 
     public function addEditPattern(Request $request, $id=null){
+        Session::flash('active', 'pattern');
         if($id == ""){
             $title = 'Add Pattern';
         }else{
@@ -64,6 +65,7 @@ class PatternController extends Controller
     }
 
     public function deletePattern($id){
+        Session::flash('active', 'pattern');
         $pattern= Pattern::find($id);
         $pattern->delete();
         return redirect()->back()->with('message', 'Pattern Deleted Successfully');

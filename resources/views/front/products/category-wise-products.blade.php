@@ -10,7 +10,7 @@
         @if ($category->parent_id == 0)
             <li class="active">{{ $category->category_name }}</li>
             @else
-            <li><a href="{{ route('front-category-products', ['url' => $category->parentCategory->url]) }}">{{ $category->parentCategory->category_name }}</a> <span class="divider">/</span></li>
+            <li><a href="{{ $category->parentCategory->url }}">{{ $category->parentCategory->category_name }}</a> <span class="divider">/</span></li>
             <li class="active">{{ $category->category_name }}</li>
         @endif
     </ul>
@@ -25,7 +25,7 @@
             <label class="control-label alignL">Sort By </label>
             <input type="hidden" id="url" value="{{ $category->url }}">
             <select name="sort" id="sort">
-                <option disabled selected>Select</option>
+                <option value="">Select</option>
                 <option value="latest_products" {{ isset($_GET['sort']) &&  $_GET['sort'] == 'latest_products' ? 'selected' : ''}}>Latest Products</option>
                 <option value="product_name_a_z" {{ isset($_GET['sort']) &&  $_GET['sort'] == 'product_name_a_z' ? 'selected' : ''}}>Product Name A - Z</option>
                 <option value="product_name_z_a" {{ isset($_GET['sort']) &&  $_GET['sort'] == 'product_name_z_a' ? 'selected' : ''}}>Product Name Z - A</option>
@@ -100,17 +100,121 @@
 
                 //ajx method
             $(document).on("change", "#sort", function(){
-                var sort = $(this).val();
-                var url = $("#url").val();
+                    var sort = $(this).val();
+                    var fabric= get_filter('fabric');
+                    var pattern= get_filter('pattern');
+                    var sleeve= get_filter('sleeve');
+                    var fit= get_filter('fit');
+                    var occasion= get_filter('occasion');
+                    var url = $("#url").val();
                 $.ajax({
                     url: url,
                     method: "post",
-                    data:{sort:sort, url:url},
+                    data:{fabric:fabric,pattern:pattern,sleeve:sleeve,fit:fit,occasion:occasion,sort:sort,url:url},
                     success: function(data){
                         $(".products_filter").html(data);
                     }
                 });
             });
+
+            $(".fabric").on('click', function(){
+                    var fabric= get_filter('fabric');
+                    var pattern= get_filter('pattern');
+                    var sleeve= get_filter('sleeve');
+                    var fit= get_filter('fit');
+                    var occasion= get_filter('occasion');
+                    var sort= $("#sort option:selected").val();
+                    var url = $("#url").val();
+                    $.ajax({
+                        url:url,
+                        method:"post",
+                        data: {fabric:fabric,pattern:pattern,sleeve:sleeve,fit:fit,occasion:occasion,sort:sort,url:url},
+                        success: function(data){
+                            $(".products_filter").html(data);
+                        },
+
+                    })
+                })
+            $(".pattern").on('click', function(){
+                    var fabric= get_filter('fabric');
+                    var pattern= get_filter('pattern');
+                    var sleeve= get_filter('sleeve');
+                    var fit= get_filter('fit');
+                    var occasion= get_filter('occasion');
+                    var sort= $("#sort option:selected").val();
+                    var url = $("#url").val();
+                    $.ajax({
+                        url:url,
+                        method:"post",
+                        data: {fabric:fabric,pattern:pattern,sleeve:sleeve,fit:fit,occasion:occasion,sort:sort,url:url},
+                        success: function(data){
+                            $(".products_filter").html(data);
+                        },
+
+                    })
+                })
+            $(".sleeve").on('click', function(){
+                    var fabric= get_filter('fabric');
+                    var pattern= get_filter('pattern');
+                    var sleeve= get_filter('sleeve');
+                    var fit= get_filter('fit');
+                    var occasion= get_filter('occasion');
+                    var sort= $("#sort option:selected").val();
+                    var url = $("#url").val();
+                    $.ajax({
+                        url:url,
+                        method:"post",
+                        data: {fabric:fabric,pattern:pattern,sleeve:sleeve,fit:fit,occasion:occasion,sort:sort,url:url},
+                        success: function(data){
+                            $(".products_filter").html(data);
+                        },
+
+                    })
+                })
+            $(".fit").on('click', function(){
+                    var fabric= get_filter('fabric');
+                    var pattern= get_filter('pattern');
+                    var sleeve= get_filter('sleeve');
+                    var fit= get_filter('fit');
+                    var occasion= get_filter('occasion');
+                    var sort= $("#sort option:selected").val();
+                    var url = $("#url").val();
+                    $.ajax({
+                        url:url,
+                        method:"post",
+                        data: {fabric:fabric,pattern:pattern,sleeve:sleeve,fit:fit,occasion:occasion,sort:sort,url:url},
+                        success: function(data){
+                            $(".products_filter").html(data);
+                        },
+
+                    })
+                })
+            $(".occasion").on('click', function(){
+                    var fabric= get_filter('fabric');
+                    var pattern= get_filter('pattern');
+                    var sleeve= get_filter('sleeve');
+                    var fit= get_filter('fit');
+                    var occasion= get_filter('occasion');
+                    var sort= $("#sort option:selected").val();
+                    var url = $("#url").val();
+                    $.ajax({
+                        url:url,
+                        method:"post",
+                        data: {fabric:fabric,pattern:pattern,sleeve:sleeve,fit:fit,occasion:occasion,sort:sort,url:url},
+                        success: function(data){
+                            $(".products_filter").html(data);
+                        },
+
+                    })
+                })
+
+                 function get_filter(class_name){
+                    var filter=[];
+                    $('.'+class_name+':checked').each(function(){
+                        filter.push($(this).val());
+                    });
+                    return filter;
+                }
         });
     </script>
 @endsection

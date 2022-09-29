@@ -22,6 +22,7 @@ class FabricController extends Controller
     }
 
     public function addEditFabric(Request $request, $id=null){
+        Session::flash('active', 'fabric');
         if($id == ""){
             $title = 'Add fabric';
         }else{
@@ -64,6 +65,7 @@ class FabricController extends Controller
     }
 
     public function deleteFabric($id){
+        Session::flash('active', 'fabric');
         $fabric= Fabric::find($id);
         $fabric->delete();
         return redirect()->back()->with('message', 'fabric Deleted Successfully');

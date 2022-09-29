@@ -22,6 +22,7 @@ class FitController extends Controller
     }
 
     public function addEditFit(Request $request, $id=null){
+        Session::flash('active', 'fit');
         if($id == ""){
             $title = 'Add Fit';
         }else{
@@ -64,6 +65,7 @@ class FitController extends Controller
     }
 
     public function deletefit($id){
+        Session::flash('active', 'fit');
         $fit= Fit::find($id);
         $fit->delete();
         return redirect()->back()->with('message', 'Fit Deleted Successfully');
