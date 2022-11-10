@@ -4,6 +4,7 @@
 <!-- Front style responsive -->
 <link href="{{asset('/')}}front/assets/css/front-responsive.min.css" rel="stylesheet"/>
 <link href="{{asset('/')}}front/assets/css/font-awesome.css" rel="stylesheet" type="text/css">
+<link href="{{asset('/')}}front/assets/css/screen.css" rel="stylesheet" type="text/css">
 <!-- Google-code-prettify -->
 <link href="{{asset('/')}}front/assets/js/google-code-prettify/prettify.css" rel="stylesheet"/>
 <!-- fav and touch icons -->

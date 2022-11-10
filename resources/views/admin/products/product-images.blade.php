@@ -92,7 +92,7 @@
                     </div>
                     <div class="form-group">
                         <label>Price</label>&nbsp;
-                        {{ $productData->product_price }}
+                        {{ $productData->product_price}}
                     </div>
                     <!-- /.form-group -->
                   </div>

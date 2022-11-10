@@ -6,6 +6,10 @@ use App\Section;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Schema;
+use Session;
+use App\Cart;
+use Auth;
+use Illuminate\Support\Facades\View;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -27,9 +31,11 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
         Paginator::useBootstrap();
-        
+
         view()->composer(['master.front-master.includes.header','master.front-master.includes.sidebar'], function ($view) {
             $view->with(['sections' => Section::where('status', 1)->get()]);
         });
+
+        
     }
 }

@@ -11,7 +11,7 @@ class ProductImagesController extends Controller
 
     public function productImages(Request $request, $id){
 
-        $productData= Product::with('subImages')->select('id','product_name','product_code','product_color','main_image')->find($id);
+        $productData= Product::with('subImages')->select('id','product_name','product_code','product_color','product_price','main_image')->find($id);
         $subImage= ProductImage::where('product_id', $id)->get();
         if($request->isMethod('post')){
 

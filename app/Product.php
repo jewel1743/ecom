@@ -49,7 +49,7 @@ protected static $small_image_path,$medium_image_path,$large_image_path;
     }
 
     public function attributes(){
-        return $this->hasMany(ProductAttribute::class);
+        return $this->hasMany(ProductAttribute::class); //->where('status',1); ata akhane use korle je attrubute gula active thkbe segulay sudu relation function cll krle dekabe
     }
     public function subImages(){
         return $this->hasMany(ProductImage::class);
@@ -164,5 +164,32 @@ protected static $small_image_path,$medium_image_path,$large_image_path;
         $product->save();
     }
 
+public static function getProductDiscountedPrice($product_id){
+        //amar moto kore json object diye
+    // $product= Product::where('id', $product_id)->first();
+    // $category= Category::where('id', $product->category_id)->first();
+    // if($product->product_discount > 0){
+    //     $discount_price= $product->product_price - ($product->product_price * $product->product_discount) / 100; // ex: product price 500 discount price 10 sutro hosse 500 - 500*10 / 100 mane product price theke - prouct_price * product_discount price / 100
+    // }
+    // else if($category->category_discount > 0){
+    //     $discount_price = $product->product_price - ($product->product_price * $category->category_discount) / 100;
+    // }else{
+    //     $discount_price= 0;
+    // }
+
+        //toArray use kore array formet a
+    $product= Product::where('id', $product_id)->first()->toArray();
+    $category= Category::where('id', $product['category_id'])->first()->toArray();
+    if($product['product_discount'] > 0){
+        $discounted_price= $product['product_price'] - ($product['product_price'] * $product['product_discount']) / 100; // ex: product price 500 discount price 10 sutro hosse 500 - 500*10 / 100 mane product price theke - prouct_price * product_discount price / 100
+    }
+    else if($category['category_discount'] > 0){
+        $discounted_price = $product['product_price'] - ($product['product_price'] * $category['category_discount']) / 100;
+    }else{
+        $discounted_price= 0;
+    }
+
+    return $discounted_price;
+}
 
 }

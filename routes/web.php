@@ -16,6 +16,14 @@ use App\Http\Controllers\Admin\PatternController;
 use App\Http\Controllers\Admin\SleeveController;
 use App\Http\Controllers\Admin\FitController;
 use App\Http\Controllers\Admin\OccasionController;
+use App\Http\Controllers\Front\CartController;
+use App\Http\Controllers\Front\AuthUserController;
+use App\Http\Controllers\Front\UserController;
+use App\Http\Controllers\Admin\CouponController;
+use App\Http\Controllers\Front\CheckoutController;
+use App\Http\Controllers\Front\OrderController;
+use App\Http\Controllers\Admin\AdminOrderController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -32,7 +40,7 @@ use App\Http\Controllers\Admin\OccasionController;
 //     return view('welcome');
 // });
 
-Auth::routes();
+//Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -125,6 +133,16 @@ Route::prefix('/admin')->group(function(){
          Route::post('/update-occasion-status',[OccasionController::class, 'updateOccasionStatus'])->name('update-occasion-status');
          Route::get('/delete-occasion/{id}',[OccasionController::class, 'deleteOccasion'])->name('delete-occasion');
 
+            //coupon code functionality routes
+        Route::get('/coupons', [CouponController::class,'coupons'])->name('admin-coupons');
+        Route::post('/update-coupon-status', [CouponController::class,'updateCouponStatus'])->name('update-coupon-status');
+        Route::match(['get', 'post'], '/add-edit-coupon/{id?}', [CouponController::class, 'addEditCoupon'])->name('add-edit-coupon');
+        Route::get('/delete-coupon/{id}', [CouponController::class, 'deleteCoupon'])->name('delete-coupon');
+
+            //admin order controller
+        Route::get('/orders',[AdminOrderController::class, 'orders'])->name('admin-orders');
+        Route::get('/order-details/{order_id}',[AdminOrderController::class, 'orderDetails'])->name('admin-order-details');
+
     });
 
 });
@@ -146,10 +164,58 @@ Route::name('front-')->group(function(){
     foreach($catUrls as $url){
         Route::get('/'.$url,[FrontProductController::class, 'categoryProducts']); //aii cntroller er aii function a current url dynamicly get kore neya ase getFacedRoot er maddhome check koro categoryProduct fntion
     }
+        //front product details single view page
+    Route::get('/product/{id}', [FrontProductController::class, 'productDetails'])->name('product-details');
+    Route::post('/get-product-attribute-by-size', [FrontProductController::class, 'getProductAttribteBySize'])->name('get-product-attribute-by-size');
+        //Cart Controller
+    Route::post('/product/add-to-cart',[CartController::class,'addToCart'])->name('add-to-cart');
+    Route::get('/cart',[CartController::class, 'cartPage'])->name('cart-page');
+    Route::post('/update-cart',[CartController::class, 'updateCart'])->name('update-cart');
+    Route::post('/delete-cart-item',[CartController::class, 'deleteCartItem'])->name('delete-cart-item');
 
-    Route::get('/contract-us', function(){
-        echo 'Contract-us Page';
+    //front user auth login register routes
+    Route::get('/login-register',[AuthUserController::class, 'loginRegister'])->name('login-register');
+    Route::post('/user-register',[AuthUserController::class, 'userRegister'])->name('user-register');
+    Route::post('/login',[AuthUserController::class, 'userLogin'])->name('user-login');
+    Route::post('/logout',[AuthUserController::class, 'userLogout'])->name('user-logout');
+    Route::get('/sign-up-email-exists-check',[AuthUserController::class, 'signupEmailCheck'])->name('signup-email-check');
+    Route::get('/verify-email/{code}',[AuthUserController::class, 'verifyEmail'])->name('verify-email');
+    Route::match(['get','post'],'/user/forgot-password', [AuthUserController::class, 'userForgotPassword'])->name('user-forgot-password');
+
+        //user Auth check group Routes
+    Route::group(['middleware' => ['user']], function(){
+
+             //user controller
+        Route::get('/user/account',[UserController::class, 'index'])->name('user-account-home');
+            //only for Bangladesh address setup
+        Route::post('/get-districts-by-division-id',[UserController::class, 'getDistrict'])->name('get-district');
+        Route::post('/get-upazilas-by-district-id',[UserController::class, 'getUpazila'])->name('get-upazila');
+        Route::post('/get-unions-by-upazila-id',[UserController::class, 'getUnion'])->name('get-union');
+        Route::post('/user/update-user-info/{id}',[UserController::class, 'updateUserInfo'])->name('update-user-info');
+
+            //user password change route
+        Route::post('/user/update-password/{id}', [UserController::class, 'updatePassword'])->name('user-update-password');
+        Route::post('/user/check-current-password', [UserController::class, 'currentPasswordCheck'])->name('check-current-password');
+
+            //check coupon code valid or not from apply in cart page
+        Route::post('/user/apply-coupon-code', [CartController::class, 'applyCouponCode'])->name('apply-coupon-code');
+
+            //checkout controller
+        Route::get('/checkout',[CheckoutController::class, 'checkout'])->name('checkout')->middleware('checkout');
+        Route::match(['get', 'post'], '/add-edit-delivery-address/{id?}', [CheckoutController::class, 'addEditDeliveryAddress'])->name('add-edit-delivery-address');
+        Route::post('/delete-delivery-address',[CheckoutController::class, 'deleteDeliveryAddress'])->name('delete-delivery-address');
+
+            //order place controller
+        Route::post('/place-order',[OrderController::class, 'placeOrder'])->name('place-order');
+        Route::get('/thanks',[OrderController::class, 'thanks'])->name('thanks');
+        Route::get('/user/orders',[OrderController::class, 'orders'])->name('orders');
+        Route::get('/user/order-details/{order_id}',[OrderController::class, 'orderDetails'])->name('order-details');
+
+
+
     });
 
 
 });
+
+

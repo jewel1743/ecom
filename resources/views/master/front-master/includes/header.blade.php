@@ -1,10 +1,16 @@
+
 <div id="header">
 	<div class="container">
 		<div id="welcomeLine" class="row">
-			<div class="span6">Welcome!<strong> User</strong></div>
+
+			@if (Auth::check())
+                <div class="span6">Welcome!<strong> {{ Auth::user()->name }}</strong></div>
+            @else
+                <div class="span6"><strong>Welcome Unregisterd User.!</strong></div>
+            @endif
 			<div class="span6">
 				<div class="pull-right">
-					<a href="product_summary.html"><span class="btn btn-mini btn-primary"><i class="icon-shopping-cart icon-white"></i> [ 3 ] Items in your cart </span> </a>
+					<a href="{{ route('front-cart-page') }}"><span class="btn btn-mini btn-primary"><i class="icon-shopping-cart icon-white"></i> [ <span class="sumCartItem">{{ sumCartItems(); }}</span> ] Items in your cart </span> </a>
 				</div>
 			</div>
 		</div>
@@ -28,7 +34,7 @@
                         @if (!count($section->categories) == 0)
                         <ul class="dropdown-menu">
                             @foreach ($section->categories as $category)
-                                <li class="nav-header"><a href="{{ $category->url }}">{{ $category->category_name }}</a></li>
+                                <li class="nav-header"><a href="{{ url('/'.$category->url) }}">{{ $category->category_name }}</a></li>
                                     @foreach ($category->subCategory as $subCategory)
                                         <li><a href="{{ url('/'.$subCategory->url) }}">{{ $subCategory->category_name }}</a></li>
                                     @endforeach
@@ -70,9 +76,18 @@
 		            <input type="text" class="search-query span2" placeholder="Search"/>
 		          </form>
 		          <ul class="nav pull-right">
-		            <li><a href="#">Contact</a></li>
+		            <li><a href="{{ route('front-orders') }}">Orders</a></li>
 		            <li class="divider-vertical"></li>
-		            <li><a href="#">Login</a></li>
+		           @if (Auth::check())
+                        <li><a href="{{ route('front-user-account-home') }}">My Account</a></li>
+                        <li class="divider-vertical"></li>
+                        <li><a href="javascript:void(0)" onclick="document.getElementById('logoutForm').submit();">Logout</a></li>
+                        <form action="{{ route('front-user-logout') }}" method="POST" id="logoutForm">
+                            @csrf
+                        </form>
+                    @else
+                    <li><a href="{{ route('front-login-register') }}">Login</a></li>
+                   @endif
 		          </ul>
 		        </div><!-- /.nav-collapse -->
 		      </div>

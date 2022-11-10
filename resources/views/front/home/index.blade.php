@@ -1,8 +1,13 @@
+<?php use App\Product; ?>
 @extends('master.front-master.master')
 @section('title')
     HOME
 @endsection
-
+    <?php
+        if(!empty($cartItems)){
+            echo '<pre>'; print_r($cartItems); die;
+        }
+     ?>
 @section('slider')
 <div id="carouselBlk">
 	<div id="myCarousel" class="carousel slide">
@@ -42,14 +47,24 @@
                             @foreach ($featureProducts as $featureProduct) <!-- $feature product a 4 kore product asbe aii 4 ta thke abar 1ta kore product aii product a asbe -->
                                 <?php $item++; ?> <!-- joto gula feature product asbe totobar $item++ hobe mane 0 thke 1 hobe 1 theke 2 hbe avabe barbe to gula feature product thke item er value tai e hobe -->
                             <li class="span3">
-                                <div class="thumbnail">
+                                <div class="thumbnail" style="height: 320px;">
                                     @if ($key <= 1 && $item <= 6) <!-- ami 6 ta feature product a new tag dekabo tai 6 dilam, $item ata amr tecnic avabe kaj krlm karon ami 6 ta product a new tag dekhabo tai ami jodi 3 ta te dekate chai tale sudu item 3 dilei hobe -->
                                         <i class="tag"></i>
                                     @endif
-                                    <a href="product_details.html"><img src="{{asset('images/product-image/small/'.$featureProduct['main_image'])}}" alt=""></a>
+                                    <a href="{{ route('front-product-details',['id' => $featureProduct['id']]) }}"><img src="{{asset('images/product-image/small/'.$featureProduct['main_image'])}}" alt=""></a>
                                     <div class="caption">
+                                        <?php $discounted_price = Product::getProductDiscountedPrice($featureProduct['id']); ?>
                                         <h5>{{ $featureProduct['product_name'] }}</h5>
-                                        <h4><a class="btn" href="product_details.html">VIEW</a> <span class="pull-right">BDT.{{ $featureProduct['product_price'] }}</span></h4>
+                                            @if ($discounted_price > 0)
+                                                <p style="color:red;">Sale BDT.{{ $discounted_price }}<p>
+                                            @endif
+                                        <h4><a class="btn" href="{{ route('front-product-details',['id' => $featureProduct['id']]) }}">VIEW</a>
+                                            @if ($discounted_price > 0)
+                                            <span class="pull-right"><del>BDT.{{ $featureProduct['product_price'] }}</del></span>
+                                            @else
+                                                <span class="pull-right">BDT.{{ $featureProduct['product_price'] }}</span>
+                                            @endif
+                                        </h4>
                                     </div>
                                 </div>
                             </li>
@@ -66,15 +81,27 @@
     <h4>Latest Products </h4>
     <ul class="thumbnails">
         @foreach ($latestProducts as $latestProduct)
-            <li class="span3">
+        <?php $discounted_price = Product::getProductDiscountedPrice($latestProduct->id); ?>
+            <li class="span3" >
                 <div class="thumbnail">
-                    <a  href="product_details.html"><img src="{{asset('images/product-image/small/'.$latestProduct->main_image)}}" alt="" width="160" height="300"/></a>
+                    <a  href="{{ route('front-product-details',['id' => $latestProduct->id]) }}"><img src="{{asset('images/product-image/small/'.$latestProduct->main_image)}}" alt="" width="160" height="auto"/></a>
                     <div class="caption">
                         <h5>{{ $latestProduct->product_name }}</h5>
                         <p>
                             {{ $latestProduct->product_code }} ({{ $latestProduct->product_color }})
+                            @if ($discounted_price > 0)
+                                <span style="color:red;">SALE BDT.{{ $discounted_price }} </span>
+                            @endif
                         </p>
-                        <h4 style="text-align:center"><a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">BDT.{{ $latestProduct->product_price }}</a></h4>
+                        <h4 style=""><a class="btn" href="{{ route('front-product-details',['id' => $latestProduct->id]) }}"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a>
+                            <a class="btn btn-primary" href="#">
+                                @if ($discounted_price > 0)
+                                   <del> BDT.{{ $latestProduct->product_price }} </del>
+                                @else
+                                    BDT.{{ $latestProduct->product_price }}
+                                @endif
+                            </a>
+                        </h4>
                     </div>
                 </div>
             </li>

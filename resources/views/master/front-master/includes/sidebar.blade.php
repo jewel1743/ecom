@@ -1,14 +1,14 @@
 <div id="sidebar" class="span3">
-    <div class="well well-small"><a id="myCart" href="product_summary.html"><img src="{{asset('/')}}front/assets/images/ico-cart.png" alt="cart">3 Items in your cart</a></div>
+    <div class="well well-small"><a id="myCart" href="product_summary.html"><img src="{{asset('/')}}front/assets/images/ico-cart.png" alt="cart"><span class="sumCartItem">{{ sumCartItems() }}</span> Items in your cart</a></div>
     <ul id="sideManu" class="nav nav-tabs nav-stacked">
             @foreach ($sections as $section)
             <li class="subMenu"><a>{{ $section->name }}</a>
             <ul>
             @if (count($section->categories) >0)
                 @foreach ($section->categories as $category)
-                    <li><a href="{{ $category->url }}"><i class="icon-chevron-right"></i><strong>{{ $category->category_name }}</strong></a></li>
+                    <li><a href="{{ url('/'.$category->url) }}"><i class="icon-chevron-right"></i><strong>{{ $category->category_name }}</strong></a></li>
                     @foreach ($category->subCategory as $subCategory)
-                        <li><a href="{{ $subCategory->url }}"><i class="icon-chevron-right"></i>{{ $subCategory->category_name }}</a></li>
+                        <li><a href="{{ url('/'.$subCategory->url) }}"><i class="icon-chevron-right"></i>{{ $subCategory->category_name }}</a></li>
                     @endforeach
                 @endforeach
             @endif
@@ -47,37 +47,37 @@
     </ul>
     <br/>
     @if (isset($page) && $page == 'category_products')
-        <div class="well well-small">
-            <h5>Fabric</h5>
-            @foreach ($fabricArray as $fabric)
-                <input class="fabric" style="margin-top: -3px;" type="checkbox" name="fabric[]" id="{{ $fabric->name }}" value="{{ $fabric->name }}">&nbsp;&nbsp;{{ $fabric->name }}<br/>
-            @endforeach
-        </div>
-        <div class="well well-small">
-            <h5>Pattern</h5>
-            @foreach ($patternArray as $pattern)
-                <input class="pattern" style="margin-top: -3px;" type="checkbox" name="pattern[]" id="{{ $pattern->name }}" value="{{ $pattern->name }}">&nbsp;&nbsp;{{ $pattern->name }}<br/>
-            @endforeach
-        </div>
-        <div class="well well-small">
-            <h5>Sleeve</h5>
-            @foreach ($sleeveArray as $sleeve)
-                <input class="sleeve" style="margin-top: -3px;" type="checkbox" name="sleeve[]" id="{{ $sleeve->name }}" value="{{ $sleeve->name }}">&nbsp;&nbsp;{{ $sleeve->name }}<br/>
-            @endforeach
-        </div>
-        <div class="well well-small">
-            <h5>Fit</h5>
-            @foreach ($fitArray as $fit)
-                <input class="fit" style="margin-top: -3px;" type="checkbox" name="fit[]" id="{{ $fit->name }}" value="{{ $fit->name }}">&nbsp;&nbsp;{{ $fit->name }}<br/>
-            @endforeach
-        </div>
-        <div class="well well-small">
-            <h5>Occasion</h5>
-            @foreach ($occasionArray as $occasion)
-                <input class="occasion" style="margin-top: -3px;" type="checkbox" name="occasion[]" id="{{ $occasion->name }}" value="{{ $occasion->name }}">&nbsp;&nbsp;{{ $occasion->name }}<br/>
-            @endforeach
-        </div>
-    @endif
+    <div class="well well-small">
+        <h5>Fabric</h5>
+        @foreach ($fabricArray as $fabric)
+            <input class="fabric" style="margin-top: -3px;" type="checkbox"  value="{{ $fabric->name }}">&nbsp;&nbsp;{{ $fabric->name }}<br/>
+        @endforeach
+    </div>
+    <div class="well well-small">
+        <h5>Pattern</h5>
+        @foreach ($patternArray as $pattern)
+            <input class="pattern" style="margin-top: -3px;" type="checkbox"   value="{{ $pattern->name }}">&nbsp;&nbsp;{{ $pattern->name }}<br/>
+        @endforeach
+    </div>
+    <div class="well well-small">
+        <h5>Sleeve</h5>
+        @foreach ($sleeveArray as $sleeve)
+            <input class="sleeve" style="margin-top: -3px;" type="checkbox"  id="{{ $sleeve->name }}" value="{{ $sleeve->name }}">&nbsp;&nbsp;{{ $sleeve->name }}<br/>
+        @endforeach
+    </div>
+    <div class="well well-small">
+        <h5>Fit</h5>
+        @foreach ($fitArray as $fit)
+            <input class="fit" style="margin-top: -3px;" type="checkbox"  id="{{ $fit->name }}" value="{{ $fit->name }}">&nbsp;&nbsp;{{ $fit->name }}<br/>
+        @endforeach
+    </div>
+    <div class="well well-small">
+        <h5>Occasion</h5>
+        @foreach ($occasionArray as $occasion)
+            <input class="occasion" style="margin-top: -3px;" type="checkbox"   value="{{ $occasion->name }}">&nbsp;&nbsp;{{ $occasion->name }}<br/>
+        @endforeach
+    </div>
+@endif
     <br/>
     <div class="thumbnail">
         <img src="{{asset('/')}}front/assets/images/payment_methods.png" title="Payment Methods" alt="Payments Methods">

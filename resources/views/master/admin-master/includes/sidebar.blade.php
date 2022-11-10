@@ -67,7 +67,7 @@
           </li>
                 <!-- Start Catelouge Group  -->
             <li class="nav-item menu-open">
-                <a href="#" class="nav-link {{ Session::get('active') == 'category' || Session::get('active') == 'section' ? 'active' : '' || Session::get('active') == 'product' ? 'active' : '' || Session::get('active') == 'brand' ? 'active' : '' || Session::get('active') == 'banner' ? 'active' : '' }}">
+                <a href="#" class="nav-link {{ Session::get('active') == 'category' || Session::get('active') == 'section' ? 'active' : '' || Session::get('active') == 'product' ? 'active' : '' || Session::get('active') == 'brand' ? 'active' : '' || Session::get('active') == 'banner' ? 'active' : '' || Session::get('active') == 'coupon' ? 'active' : '' }}">
                     <i class="nav-icon fas fa-th"></i>
                     <p>
                       Catelouge
@@ -103,6 +103,18 @@
                 <a href="{{ route('banners') }}" class="nav-link {{ Session::get('active') == 'banner' ? 'active' : '' }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Banners</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('admin-coupons') }}" class="nav-link {{ Session::get('active') == 'coupon' ? 'active' : '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Coupons</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('admin-orders') }}" class="nav-link {{ Session::get('active') == 'orders' ? 'active' : '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Orders</p>
                 </a>
               </li>
             </ul>
