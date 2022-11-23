@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Session;
 use DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
@@ -24,6 +25,7 @@ class OrderController extends Controller
             if(!isset($data['payment'])){
                return redirect()->back()->with('error_message','Please Select a Payment Method');
             }
+
             if($data['payment'] == 'Cod'){
                 $payment_method= 'Cod';
             }else{
@@ -39,20 +41,49 @@ class OrderController extends Controller
 
                 //save current order er product,, mane akn e je oder ta save holo sei order er id diye user sob cart er product save krbo
             OrdersProduct::saveOrderProducts($currentSavedOrder);
-
-                //delete cart item this user after saved order
-            Cart::where('user_id',Auth::user()->id)->delete();
+            
+                //forget coupon code applying session
+                Session::forget('couponAmount');
+                Session::forget('amount_type');
+                Session::forget('coupon_code');
 
            Session::put('order_id',$currentSavedOrder->id);
            Session::put('grand_total',$data['grand_total']);
            // DB::commit();
+            if($payment_method == 'Cod'){
+                //send emial to user
+                $orderDetails= Order::with('orders_products')->where('id',$currentSavedOrder->id)->first()->toArray();
+               // echo '<pre>'; print_r($orderDetails); die;
+                $email= Auth::user()->email;
+                $coupon= Coupon::where('coupon_code', $orderDetails['coupon_code'])->first();
+                if($coupon){
+                    $couponAmountType= $coupon->amount_type;
+                }else{
+                    $couponAmountType= '';
+                }
+                $messageData=[
+                    'name' => Auth::user()->name,
+                    'order_id' => $currentSavedOrder->id,
+                    'orderDetails' => $orderDetails,
+                    'couponAmountType' => $couponAmountType
+                ];
 
-           return redirect(route('front-thanks'));
+                Mail::send('mail.order-mail',$messageData, function($message) use ($email){
+                    $message->to($email)->subject('Order Placed -Ecom');
+                });
+                return redirect(route('front-thanks'));
+            }else{
+                return 'Comming Soon';
+            }
+
         }
     }
 
     public function thanks(){
         if(Session::has('order_id')){
+
+                //delete cart item this user after saved order
+                Cart::where('user_id',Auth::user()->id)->delete();
             return view('front.checkout.thanks');
         }else{
             return redirect(route('front-cart-page'));

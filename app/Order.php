@@ -16,6 +16,10 @@ class Order extends Model
         return $this->hasMany(OrdersProduct::class); //aii order id er joto gula ordersproducts table er product ase sob retun krbe
     }
 
+    public function user_info(){
+        return $this->belongsTo(Order::class, 'user_id'); //onk somoy relation key na dile ase na, tai dilam, order::class ta hosse primary key r 'user_id' ta forgen key mane user_id er id number ta order ta table er id jeta hobe se row retun korbe atai relation
+    }
+
     public static function saveOrder($delivery_address, $request,$payment_method){
 
         $delivery_address= $delivery_address;

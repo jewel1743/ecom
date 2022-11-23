@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Http\Controllers\Front\BannerController;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -30,5 +29,6 @@ class DatabaseSeeder extends Seeder
         //  $this->call(OccasionsTableSeeder::class);
          //$this->call(CouponsTableSeeder::class);
          //$this->call(DeliveryAddressesTableSeeder::class);
+         //$this->call(OrderStatusTableSeeder::class);
     }
 }

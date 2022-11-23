@@ -19,6 +19,7 @@
                 <th>Payment Method</th>
                 <th>Grand Total</th>
                 <th>Order Date</th>
+                <th>Order Status</th>
                 <th>Order Details</th>
             </tr>
             @foreach ($orders as $order)
@@ -38,6 +39,7 @@
 
                 <td>{{ $order['grand_total'] }} TK</td>
                 <td>{{ date('d-m-Y',strtotime($order['created_at'] ))}}</td>
+                <td>{{ $order['order_status']}}</td>
                 <td><a href="{{ route('front-order-details',['order_id' => $order['id']]) }}">Order Details</a></td>
             </tr>
             @endforeach

@@ -49,10 +49,12 @@
             <thead>
                 <tr>
                     <th>Order ID</th>
-                    <th>Product Code</th>
-                    <th>Product Name</th>
+                    <th>Customer Name</th>
+                    <th>Customer Email</th>
+                    <th>Ordered Products</th>
+                    <th>Order Amount</th>
                     <th>Payment Method</th>
-                    <th>Grand Total</th>
+                    <th>Order Status</th>
                     <th>Order Date</th>
                     <th>Order Details</th>
                 </tr>
@@ -62,18 +64,19 @@
                 <tr>
                     <td>{{ $order['id'] }}</td>
                     <td>
-                        @foreach ($order['orders_products'] as $product)
-                            {{ $product['product_code'] }} <br>
-                        @endforeach
+                        {{ $order['user_info']['name'] }}
+                    </td>
+                    <td style="max-width: 80px;">
+                        {{ $order['user_info']['email'] }}
                     </td>
                     <td>
-                        @foreach ($order['orders_products'] as $product)
-                            {{ $product['product_name'] }} <br>
+                        @foreach ($order['orders_products'] as $orderProduct)
+                            {{ $orderProduct['product_code'] }} ({{ $orderProduct['product_quantity'] }}) <br>
                         @endforeach
                     </td>
-                    <td>{{ $order['payment_method'] }}</td>
-
                     <td>{{ $order['grand_total'] }} TK</td>
+                    <td>{{ $order['payment_method'] }}</td>
+                    <td>{{ $order['order_status'] }}</td>
                     <td>{{ date('d-m-Y',strtotime($order['created_at'] ))}}</td>
                     <td><a href="{{ route('admin-order-details',['order_id' => $order['id']]) }}">Order Details</a></td>
                 </tr>

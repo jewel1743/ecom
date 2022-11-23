@@ -57,11 +57,11 @@
                         </tr>
                         <tr>
                             <th>Short Description</th>
-                            <td>{{ $product->short_description }}</td>
+                            <td>{!! $product->short_description !!}</td>
                         </tr>
                         <tr>
                             <th>Long Description</th>
-                            <td>{{ $product->long_description }}</td>
+                            <td>{!! $product->long_description !!}</td>
                         </tr>
                         <tr>
                             <th>Wash Care</th>
